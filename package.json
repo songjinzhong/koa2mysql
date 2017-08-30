@@ -1,0 +1,22 @@
+{
+  "name": "koa-mysql",
+  "version": "1.0.0",
+  "description": "a server use koa connect mysql",
+  "main": "server/app.js",
+  "scripts": {
+    "start": "node server/app.js"
+  },
+  "keywords": [
+    "koa",
+    "mysql"
+  ],
+  "author": "songjinzhong",
+  "license": "ISC",
+  "dependencies": {
+    "koa": "^2.3.0",
+    "koa-logger": "^3.0.1",
+    "koa-router": "^7.2.1",
+    "koa-static": "^4.0.1",
+    "mysql": "^2.14.1"
+  }
+}
