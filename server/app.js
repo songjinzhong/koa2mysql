@@ -3,10 +3,12 @@ const router = require('koa-router')()
 const serve = require('koa-static')
 const path = require('path')
 const sql = require('./mysql')
+const cors = require('koa-cors')
 const Koa = require('koa')
 const app = module.exports = new Koa()
 
 app.use(logger())
+app.use(cors())
 
 app.use(serve(path.join(__dirname, '../public')))
 
@@ -29,5 +31,5 @@ async function speed (ctx) {
   ctx.body = sqlData
 }
 
-if (!module.parent) app.listen(3000)
-console.log('listen at 3000')
+if (!module.parent) app.listen(8080)
+console.log('listen at 8080')
