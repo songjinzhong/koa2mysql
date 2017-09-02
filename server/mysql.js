@@ -38,6 +38,10 @@ const sql = {
   selectDate: () => {
     const query = 'select distinct timer from speed'
     return excuteQuery(query)
+  },
+  selectOnce: (timer) => {
+    const query = `select * from speed where timer = '${timer}'`
+    return excuteQuery(query)
   }
 }
 module.exports = sql
