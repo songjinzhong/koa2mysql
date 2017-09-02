@@ -4,31 +4,50 @@ const serve = require('koa-static')
 const path = require('path')
 const sql = require('./mysql')
 const cors = require('koa-cors')
+const koaBody = require('koa-body')
 const Koa = require('koa')
 const app = module.exports = new Koa()
 
 app.use(logger())
 app.use(cors())
+app.use(koaBody())
 
 app.use(serve(path.join(__dirname, '../public')))
 
 // route definitions
 
-router.get('/speed', speed)
+router.get('/getAll', getAll)
+  .get('/timer/:timer', timer)
 
 app.use(router.routes())
 
 app.use(async function (ctx) {
   ctx.throw(404, 'Not found!')
 })
-async function speed (ctx) {
+async function getAll (ctx) {
   let sqlData
   try {
     sqlData = await sql.selectDate()
   } catch (e) {
-    ctx.throw(404, '数据库执行发生错误')
+    ctx.throw(500, '发生错误')
   }
-  ctx.body = sqlData
+  ctx.body = sqlData.map(v => {
+    return parseInt(v['timer'])
+  })
+}
+async function timer (ctx) {
+  let sqlData
+  try {
+    const { timer } = ctx.params
+    sqlData = await sql.selectOnce(timer)
+  } catch (e) {
+    ctx.throw(500, '发生错误')
+  }
+  ctx.body = sqlData.map(v => {
+    v.speed = parseInt(v.speed)
+    v.distance = parseInt(v.distance)
+    return v
+  })
 }
 
 if (!module.parent) app.listen(8080)
