@@ -46,9 +46,11 @@ async function timer (ctx) {
   ctx.body = sqlData.map(v => {
     v.speed = parseInt(v.speed)
     v.distance = parseInt(v.distance)
+    v.heartrate = parseInt(v.heartrate)
+    v.oxygen = parseInt(v.oxygen)
     return v
   })
 }
 
-if (!module.parent) app.listen(8080)
-console.log('listen at 8080')
+if (!module.parent) app.listen(80)
+console.log('listen at 80')
