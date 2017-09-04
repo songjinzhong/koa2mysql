@@ -7,12 +7,16 @@ const cors = require('koa-cors')
 const koaBody = require('koa-body')
 const Koa = require('koa')
 const app = module.exports = new Koa()
+const staticCache = require('koa-static-cache')
 
 app.use(logger())
 app.use(cors())
 app.use(koaBody())
-
+app.use(staticCache(path.join(__dirname, '../public'), {
+  maxAge: 365 * 24 * 60 * 60
+}))
 app.use(serve(path.join(__dirname, '../public')))
+
 
 // route definitions
 
