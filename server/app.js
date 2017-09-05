@@ -48,11 +48,13 @@ async function timer (ctx) {
     ctx.throw(500, '发生错误')
   }
   ctx.body = sqlData.map(v => {
-    v.speed = parseInt(v.speed)
-    v.distance = parseInt(v.distance)
+    v.speed = parseInt(v.speed)/50
+    v.distance = parseInt(v.distance)/50
     v.heartrate = parseInt(v.heartrate)
     v.oxygen = parseInt(v.oxygen)
     return v
+  }).sort((a, b) => {
+    return a.id - b.id
   })
 }
 
